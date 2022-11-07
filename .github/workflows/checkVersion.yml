@@ -1,0 +1,56 @@
+name: Pull request version check
+
+on:
+  pull_request:
+    types:
+      - closed
+      - opened
+    branches:
+      - main
+      - master
+jobs:
+  versionCheck:
+    name: Pull request version number validation
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ github.event.pull_request.title }}
+    steps:
+      - id: version
+        name: Get the version number
+        run: |
+          v=`echo $version | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
+          if [ "$version" = "$v" ]; then
+            echo "version="-1"" >> $GITHUB_OUTPUT
+          else
+            echo "version=$v" >> $GITHUB_OUTPUT
+          fi
+          echo "Version number ${{ steps.version.outputs.version }}"
+        env:
+          version: ${{ inputs.version_checker }}
+  updateProjectVersion:
+    runs-on: macos-latest
+    needs: versionCheck
+    if: needs.versionCheck.outputs.version != '-1' #&& github.event.pull_request.merged == true
+    name: Update version Properties
+    steps:
+      - name: Update version
+        run: echo "update version to ${{ needs.versionCheck.outputs.version }}"
+
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+            ref: ${{github.head_ref}}
+
+      - name: Grant Permission for Gradlew to Execute
+        run: chmod +x version_update.sh
+
+      - name: Update Version
+        run: ./version_update.sh '${{ github.event.pull_request.title }}'
+
+      - name: Update Internal Library
+        run: |
+            git config --global user.email "robot@neuro-id.com"
+            git config --global user.name "robot"
+            git add version.properties
+            git commit -m "updating version"
+            git push
