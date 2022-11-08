@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - actions
 jobs:
   releaseVersio:
     name: Release Version
