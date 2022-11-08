@@ -28,7 +28,7 @@ jobs:
         run: |
           git config --global user.email "robot@neuro-id.com"
           git config --global user.name "robot"
-          git tag -a v${{env.GITHUB_SDK_VERSION}} 
+          git tag -a v${{env.GITHUB_SDK_VERSION}} -m "Neuro-ID Android SDK Version: ${{env.GITHUB_SDK_VERSION}}"
           git push
 
       - name: Create Release ✅
