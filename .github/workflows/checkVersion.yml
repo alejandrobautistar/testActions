@@ -3,7 +3,6 @@ name: Pull request version check
 on:
   push:
     branches:
-      - main
       - master
       - actions
 jobs:
