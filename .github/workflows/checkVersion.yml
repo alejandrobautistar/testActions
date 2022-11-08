@@ -11,17 +11,15 @@ jobs:
     name: Pull request version number validation
     runs-on: ubuntu-latest
     steps:
-      - id: version
         name: Get the version number
         run: |
-          v=`echo $github.event.pull_request.title | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
+          version=$github.event.pull_request.title
+          v=`echo $version | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
           if [ "$version" = "$v" ]; then
             exit 1;
           else
             echo $v;
           fi
-        env:
-          version: ${{ inputs.version_checker }}
 
   releaseVersion:
     name: Release Version
