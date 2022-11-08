@@ -13,10 +13,10 @@ jobs:
     steps:
       - name: Check PR Title
         run: |
-          echo $github.event.pull_request.title
-          v=`echo $github.event.pull_request.title | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
+          echo ${{github.event.pull_request.title}}
+          v=`echo ${{github.event.pull_request.title}} | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
           echo $v
-          if [ "$github.event.pull_request.title" = "$v" ]; then
+          if [ "${{github.event.pull_request.title}}" = "$v" ]; then
             exit 1;
           else
             echo $v;
