@@ -21,4 +21,4 @@ jobs:
         run: ./properties_read.sh
 
       - name: Show Version name
-        run: echo ${{env.SDK_VERSION}}
+        run: echo ${{env.GITHUB_SDK_VERSION}}
