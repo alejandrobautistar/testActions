@@ -11,6 +11,9 @@ jobs:
     name: Release Version
     runs-on: ubuntu-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
       - name: Grant Permission for properties
         run: chmod +x properties_read.sh
 
