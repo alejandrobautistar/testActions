@@ -11,7 +11,7 @@ jobs:
     name: Pull request version number validation
     runs-on: ubuntu-latest
     steps:
-        name: Get the version number
+      - name: Get the version number
         run: |
           version=$github.event.pull_request.title
           v=`echo $version | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
