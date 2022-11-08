@@ -28,7 +28,6 @@ jobs:
         run: |
           git config --global user.email "robot@neuro-id.com"
           git config --global user.name "robot"
-          git add app/libs
           git tag -a v${{env.GITHUB_SDK_VERSION}} 
           git push
 
