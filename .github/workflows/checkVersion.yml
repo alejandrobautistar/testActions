@@ -11,11 +11,12 @@ jobs:
     name: Pull request version number validation
     runs-on: ubuntu-latest
     steps:
-      - name: Get the version number
+      - name: Check PR Title
         run: |
-          version=$github.event.pull_request.title
-          v=`echo $version | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
-          if [ "$version" = "$v" ]; then
+          echo ${{github.event.pull_request.title}}
+          v=`echo ${{github.event.pull_request.title}} | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\).*$/\1/'`
+          echo $v
+          if [ "${{github.event.pull_request.title}}" = "$v" ]; then
             exit 1;
           else
             echo $v;
